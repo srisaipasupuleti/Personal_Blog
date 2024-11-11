@@ -8,7 +8,5 @@
     <h1>{{article.title}}</h1>
     <p><strong>Published on:</strong>{{article.date_published}}</p>
     <p>{{article.content}}</p>
-    <a href="{% url 'edit_article' article.id%}">Edit this article</a>
-    <a href="{% url 'add_article' %}">Add new article</a>
     <a href="{% url 'index' %}">Back to Home</a>
 {% endblock %}

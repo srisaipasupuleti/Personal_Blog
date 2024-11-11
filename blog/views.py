@@ -36,7 +36,16 @@ def edit_article(request, article_id):
         form = ArticleForm(instance=article)
     return render(request, 'blog/edit_article.html', {'form': form, 'article': article})
 
-@login_required
+
+def delete_article(request, article_id):
+    article = get_object_or_404(Article, id=article_id)
+    if request.method == "POST":
+        article.delete()
+        return redirect('dashboard')
+    return render(request, 'blog/delete_article.html', {'article': article})
+
+
+# @login_required
 def dashboard(request):
     articles = Article.objects.all()
     return render(request, 'blog/dashboard.html', {'articles': articles})
