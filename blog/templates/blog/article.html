@@ -8,5 +8,30 @@
     <h1>{{article.title}}</h1>
     <p><strong>Published on:</strong>{{article.date_published}}</p>
     <p>{{article.content}}</p>
-    <a href="{% url 'index' %}">Back to Home</a>
+    <a href="{% url 'home' %}">Back to Home</a>
+    
+    <!-- ? how this user object will be maintained in Django-->
+    {% if request.user.is_authenticated %}
+    <!-- ? do we need to  execute article.id or inside url template tag-->
+    <form action="{% url 'add_comment' article.id%}" method="post">
+        {% csrf_token %}
+        <textarea name="text" placeholder="Add your comment here..."></textarea>
+        <button type="submit"> Submit Comment</button>
+    </form>
+    {% else %}
+    <p><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
+    <p>Or <a href="{% url 'guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
+    {% endif %}
+    
+    <ul id="comment-section">
+        {% for comment in comments %}
+        <li id="comment">
+            <p><strong>{{comment.user}}</strong> on <i>{{comment.date}}</i></p>
+            <p>{{comment.text}}</p>
+            <button>Like</button>
+            <button>Dislike</button>
+        </li>
+        {% endfor %}
+    </ul>
+
 {% endblock %}
