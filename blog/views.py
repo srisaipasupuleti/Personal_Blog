@@ -26,7 +26,8 @@ def user_login(request):
         if user:
             login(request, user)
             # ? why request.GET.get when request.method=='POST'
-            return redirect(request.GET.get('next', 'home'))
+            next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
+            return redirect(next_url)
     return render(request, 'auth/login.html')
 
 def user_logout(request):
@@ -37,7 +38,8 @@ def user_logout(request):
 def guest_login(request):
     guest_user, created = User.objects.get_or_create(username='guest_user')
     login(request, guest_user)
-    return redirect(request.GET.get('next', 'home'))
+    next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
+    return redirect(next_url)
 
 
 def home(request):
