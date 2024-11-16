@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from .models import Article, Comment
 from django.http import HttpResponse
 from .forms import ArticleForm
@@ -48,7 +48,7 @@ def home(request):
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article,id=article_id)
-    comments = Comment.objects.filter(article=article)
+    comments = Comment.objects.filter(article=article, parent=None)
     return render(request, "blog/article.html", {"article": article, "comments": comments})
 
 @login_required
@@ -59,6 +59,55 @@ def add_comment(request, article_id):
         Comment.objects.create(article=article, user=request.user, text=text)
         return redirect('article_detail',article_id=article_id)
     return redirect('home')
+
+@login_required
+def handle_like(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    user = request.user
+    if user in comment.liked_by.all():
+        comment.liked_by.remove(user)
+    else:
+        comment.liked_by.add(user)
+        
+    if user in comment.disliked_by.all():
+        comment.disliked_by.remove(user)
+    return redirect(reverse('article_detail', args=[comment.article.id]))
+
+@login_required
+def handle_dislike(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    user = request.user
+    if user in comment.disliked_by.all():
+        comment.disliked_by.remove(user)
+    else:
+        comment.disliked_by.add(user)
+        
+    if user in comment.liked_by.all():
+        comment.liked_by.remove(user)
+    
+    return redirect(reverse('article_detail', args=[comment.article.id]))
+
+@login_required
+def handle_reply(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    article = comment.article
+    if request.method == "POST":
+        text = request.POST.get('text')
+        
+        if text:
+            text = request.POST.get('text')
+            Comment.objects.create(
+                article=article, 
+                user=request.user, 
+                text=text,
+                parent = comment
+            )
+        return redirect(request.GET.get('next', reverse('article_detail', args=[article.id])))
+    else:
+        return redirect('article_detail', article.id)
+            
+        
+        
 
 def add_article(request):
     if request.method == "POST":

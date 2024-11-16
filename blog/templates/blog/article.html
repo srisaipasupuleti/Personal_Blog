@@ -13,7 +13,7 @@
     <!-- ? how this user object will be maintained in Django-->
     {% if request.user.is_authenticated %}
     <!-- ? do we need to  execute article.id or inside url template tag-->
-    <form action="{% url 'add_comment' article.id%}" method="post">
+    <form action="{% url 'add_comment' article.id %}" method="post">
         {% csrf_token %}
         <textarea name="text" placeholder="Add your comment here..."></textarea>
         <button type="submit"> Submit Comment</button>
@@ -28,10 +28,57 @@
         <li id="comment">
             <p><strong>{{comment.user}}</strong> on <i>{{comment.date}}</i></p>
             <p>{{comment.text}}</p>
-            <button>Like</button>
-            <button>Dislike</button>
+            <!-- <p>{{comment.likes_count}} Likes | {{comment.dislikes_count}} Dislikes</p> -->
+            <div>
+                <form action="{% url 'handle_like' comment.id %}?next={{request.path}}" method="post" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit">{{comment.likes_count}} Likes</button>
+                </form>
+                <form action="{% url 'handle_dislike' comment.id %}?next={{request.path}}" method="post" style="display: inline">
+                    {% csrf_token %}
+                    <button type="submit">{{comment.dislikes_count}} Dislikes</button>
+                </form>
+                <button class="reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
+                <div class="reply-form-container" id="reply-form-{{ comment.id }}" style="display: none;">
+                    <form action="{% url 'handle_reply' comment.id %}?next={{request.path}}" method="post">
+                        {% csrf_token %}
+                        <textarea name="text" placeholder="Reply to this comment"></textarea>
+                        <button type="submit">Submit Reply</button>
+                    </form>
+                </div>
+            </div>
+            {% if comment.replies.all %}
+                <ul>
+                    {% for reply in comment.replies.all %}
+                        <li>
+                            <p><strong>{{reply.user}}</strong> on <i>{{reply.date}}</i></p>
+                            <p>{{reply.text}}</p>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
         </li>
         {% endfor %}
     </ul>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            const replyButtons = document.querySelectorAll('.reply-btn');
+            console.log(replyButtons);
+
+            replyButtons.forEach(button => {
+                button.addEventListener('click', function(){
+                    const commentId = this.getAttribute('data-comment-id');
+                    const replyForm = document.getElementById(`reply-form-${commentId}`);
+                    console.log(replyForm);
+                    if(replyForm.style.display === 'none'){
+                        replyForm.style.display = 'block';  
+                    }
+                    else{
+                        replyForm.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
 {% endblock %}
