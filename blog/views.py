@@ -29,6 +29,11 @@ def user_login(request):
             return redirect(request.GET.get('next', 'home'))
     return render(request, 'auth/login.html')
 
+def user_logout(request):
+    logout(request)
+    next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
+    return redirect(next_url)
+
 def guest_login(request):
     guest_user, created = User.objects.get_or_create(username='guest_user')
     login(request, guest_user)
