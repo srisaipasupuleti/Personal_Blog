@@ -1,0 +1,45 @@
+#app-name{
+    flex: 1;
+    text-align: left;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+#profile-container{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    width: fit-content;
+}
+
+#profile-container > * { 
+    width: fit-content;
+    color: white;
+    text-decoration: none;
+}
+
+#profile_container a:hover{
+    text-decoration: underline;
+}
+
+#profile-container > :last-child{
+    margin-right:0;
+}
+
+#greet-user{
+    padding: 5px;
+    margin-right: 5px;
+    border-right: 1px solid white;
+}
+
+article{
+    text-align: center;
+}
+
+.comment-section{
+    text-align: center;
+}
+
+.comment-section * {
+    text-align: left;
+}

@@ -1,0 +1,39 @@
+body{
+    font-family: sans-serif, Arial;
+    margin: 0;
+    padding: 0;
+    background-color: antiquewhite;
+    height: 100%;
+}
+
+header{
+    top: 0;
+    background-color: aquamarine;
+    padding: 10px;
+    text-align: center;
+}
+
+main{
+    position: relative;
+    height: 100%;
+    overflow: auto;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+
+}
+
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: black;
+    color: white;
+}
+
+
