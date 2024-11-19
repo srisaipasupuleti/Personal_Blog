@@ -15,7 +15,7 @@ def user_signup(request):
         user = User.objects.create_user(username=username, password=password)
         login(request, user)
         return redirect(request.POST.get('next', 'home'))
-    return render(request, 'auth/signup.html')
+    return render(request, 'blog/signup.html')
 
 def user_login(request):
     if request.method == 'POST':
@@ -28,7 +28,7 @@ def user_login(request):
             # ? why request.GET.get when request.method=='POST'
             next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
             return redirect(next_url)
-    return render(request, 'auth/login.html')
+    return render(request, 'blog/login.html')
 
 def user_logout(request):
     logout(request)

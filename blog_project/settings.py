@@ -119,7 +119,17 @@ USE_TZ = True
 
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+# URL prefix for static files
+STATIC_URL = '/static/'
+
+# For serving static files in development
+STATICFILES_DIRS = [BASE_DIR/"static"]
+
+# For serving static files in production (use with collectstatic)
+STATIC_ROOT = BASE_DIR / "staticfiles" # Collected static files location
+
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

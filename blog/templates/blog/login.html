@@ -1,9 +1,8 @@
-{% extends 'auth/base.html' %}
+{% extends 'blog/auth_base.html' %}
 
 {% block title %} Log in {% endblock %}
 
 {% block content %}
-    <!--? request.path vs request.GET.next-->
     <form action="{% url 'login' %}?next={{ request.GET.next }}" method="post">
         {% csrf_token %}
         <input type="text" name="username" placeholder="Username" required>
