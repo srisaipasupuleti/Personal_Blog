@@ -7,22 +7,20 @@
     <link rel="stylesheet" tyep="text/css" href="{% static 'css/base_styles.css' %}"> 
 </head>
 <body>
-    <main>
-        <header>
-            <nav>
-                <text id="app-name">Sye Blog</text>
-                <section id="profile-container">
-                    {% if request.user.is_authenticated %}
-                    <div id="greet-user">Hello, {{request.user}}</div>
-                    <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
-                    {% else %}
-                    <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
-                    {% endif %}
-                </section>
-            </nav>
-        </header>
-            {% block content %}{% endblock %}
-        <footer>@Syecence</footer>
-    </main>
+    <header>
+        <nav>
+            <text id="app-name">Sye Blog</text>
+            <section id="profile-container">
+                {% if request.user.is_authenticated %}
+                <div id="greet-user">Hello, {{request.user}}</div>
+                <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+                {% endif %}
+            </section>
+        </nav>
+    </header>
+        {% block content %}{% endblock %}
+    <footer>@Syecence</footer>
 </body>
 </html>
