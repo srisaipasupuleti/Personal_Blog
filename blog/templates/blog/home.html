@@ -1,10 +1,9 @@
 {% extends "blog/base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<h1>Articles</h1>
-<ul>
+<div id="article-section">
     {% for article in articles %}
-        <li><a href="{% url 'article_detail' article.id %}">{{ article.title }}</a> - {{ article.date_published }}</li>
+        <a href="{% url 'article_detail' article.id %}"><div class="article-tile"><span class="article-title">{{ article.title }}</span><br><span class="article-date">{{ article.date_published }}</span></div></a>
     {% endfor %}
-</ul>
+</div>
 {% endblock %}

@@ -4,13 +4,14 @@
 
 {% block content %}
     <div id="login-form-container">
+        <h2>User Login</h2>
         <form id="login-form" action="{% url 'login' %}?next={{ request.GET.next }}" method="post">
             {% csrf_token %}
             <input type="text" name="username" placeholder="Username" required>
             <input type="password" name="password" placeholder="Passwrod" required>
             <button id="submit-btn" type="submit">Login</button>
         </form>
-        <text><a href="{% url 'guest_login' %}?next={{ request.GET.next }}">Continue as Guest</a></text><br>
+        <text><a href="{% url 'guest_login' %}?next={{ request.GET.next }}">Continue as Guest</a></text>
         <text>Don't have an account? <a href="{% url 'signup' %}?next={{ request.GET.next }}">Sign up here</a></text>
     </div>
 {% endblock %}

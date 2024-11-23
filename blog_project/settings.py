@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -122,11 +122,10 @@ USE_TZ = True
 # URL prefix for static files
 STATIC_URL = '/static/'
 
-# For serving static files in development
-STATICFILES_DIRS = [BASE_DIR/"static"]
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # For serving static files in production (use with collectstatic)
-STATIC_ROOT = BASE_DIR / "staticfiles" # Collected static files location
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # Collected static files location
 
 
 

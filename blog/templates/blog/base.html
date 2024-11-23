@@ -3,24 +3,23 @@
 <html>
 <head>
     <title>{% block title %}Blog{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'blog/css/styles.css' %}">
-    <link rel="stylesheet" tyep="text/css" href="{% static 'css/base_styles.css' %}"> 
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
-    <header>
-        <nav>
-            <text id="app-name">Sye Blog</text>
-            <section id="profile-container">
-                {% if request.user.is_authenticated %}
-                <div id="greet-user">Hello, {{request.user}}</div>
-                <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
-                {% else %}
-                <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
-                {% endif %}
-            </section>
-        </nav>
-    </header>
+    <nav>
+        <h1 id="app-name">Sye Blog</h1>
+        <span>
+            {% if request.user.is_authenticated %}
+            <span>Hello, {{request.user}}</span><br>
+            <a href="{% url 'logout' %}?next={{ request.path }}">Logout</a>
+            {% else %}
+            <a href="{% url 'login' %}?next={{ request.path }}">Login</a>
+            {% endif %}
+        </span>
+    </nav>
+    <main>
         {% block content %}{% endblock %}
+    </main>
     <footer>@Syecence</footer>
 </body>
 </html>
