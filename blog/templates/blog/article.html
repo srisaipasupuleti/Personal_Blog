@@ -15,14 +15,14 @@
                 <!-- ? how this user object will be maintained in Django-->
                 {% if request.user.is_authenticated %}
                 <!-- ? do we need to  execute article.id or inside url template tag-->
-                <form action="{% url 'add_comment' article.id %}" method="post">
+                <form action="{% url 'blog:add_comment' article.id %}" method="post">
                     {% csrf_token %}
                     <textarea name="text" placeholder="Add your comment here..."></textarea>
                     <button type="submit"> Comment</button>
                 </form>
                 {% else %}
-                <p><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
-                <p>Or <a href="{% url 'guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
+                <p><a href="{% url 'user:login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
+                <p>Or <a href="{% url 'blog:guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
                 {% endif %}
             </div>
             
@@ -33,17 +33,17 @@
                         <p>{{comment.text}}</p>
                         <!-- <p>{{comment.likes_count}} Likes | {{comment.dislikes_count}} Dislikes</p> -->
                         <div class="comment-options">
-                            <form action="{% url 'handle_like' comment.id %}?next={{request.path}}" method="post" style="display: inline;">
+                            <form action="{% url 'blog:handle_like' comment.id %}?next={{request.path}}" method="post" style="display: inline;">
                                 {% csrf_token %}
                                 <button class="comment-like-button" type="submit">{{comment.likes_count}} Likes</button>
                             </form>
-                            <form action="{% url 'handle_dislike' comment.id %}?next={{request.path}}" method="post" style="display: inline">
+                            <form action="{% url 'blog:handle_dislike' comment.id %}?next={{request.path}}" method="post" style="display: inline">
                                 {% csrf_token %}
                                 <button class="comment-dislike-button" type="submit">{{comment.dislikes_count}} Dislikes</button>
                             </form>
                             <button class="reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
                             <div class="reply-form-container" id="reply-form-{{ comment.id }}" style="display: none;">
-                                <form id="reply-form" action="{% url 'handle_reply' comment.id %}?next={{request.path}}" method="post">
+                                <form id="reply-form" action="{% url 'blog:handle_reply' comment.id %}?next={{request.path}}" method="post">
                                     {% csrf_token %}
                                     <textarea name="text" placeholder="Reply to this comment"></textarea>
                                     <button type="submit">Submit</button>

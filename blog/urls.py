@@ -1,12 +1,14 @@
 from django.urls import path
 from . import views
 
+app_name = 'blog'
+
 urlpatterns = [
     path('', views.home, name='home'),
     # ? is it better to end paths with / ?
-    path('signup', views.user_signup, name='signup'),
-    path('login', views.user_login, name='login'),
-    path('logout',views.user_logout, name='logout'),
+    # path('signup', views.user_signup, name='signup'),
+    # path('login', views.user_login, name='login'),
+    # path('logout',views.user_logout, name='logout'),
     path('guest_login', views.guest_login, name='guest_login'),
     path('article/<int:article_id>', views.article_detail, name='article_detail'),
     path('add_comment/<int:article_id>', views.add_comment, name='add_comment'),
