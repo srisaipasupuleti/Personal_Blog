@@ -56,7 +56,8 @@ def add_comment(request, article_id):
     if request.method == "POST":
         article = get_object_or_404(Article, id=article_id)
         text = request.POST['text']
-        Comment.objects.create(article=article, user=request.user, text=text)
+        if text:
+            Comment.objects.create(article=article, user=request.user, text=text)
         return redirect('article_detail',article_id=article_id)
     return redirect('home')
 
@@ -95,7 +96,6 @@ def handle_reply(request, comment_id):
         text = request.POST.get('text')
         
         if text:
-            text = request.POST.get('text')
             Comment.objects.create(
                 article=article, 
                 user=request.user, 

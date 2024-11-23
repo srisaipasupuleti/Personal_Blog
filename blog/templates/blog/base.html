@@ -7,6 +7,7 @@
 </head>
 <body>
     <nav>
+        <a href="{% url 'home' %}">Home</a>
         <h1 id="app-name">Sye Blog</h1>
         <span>
             {% if request.user.is_authenticated %}

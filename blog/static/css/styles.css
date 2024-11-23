@@ -25,10 +25,11 @@ nav{
     display: flex;
     flex-direction: row;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
     padding: 10px;
     background: linear-gradient(to right, rgb(189, 209, 255), rgb(53, 186, 253));
+    font-size: 1rem;
 }
 
 nav > h1{
@@ -103,8 +104,79 @@ ul{
 }
 .article-date{
     color:gray;
+    margin-top: 0;
 }
 
 #article-section > a{
     text-decoration: none;
 }
+
+article{
+    padding: 0 20px;
+    margin: 10px 30px;
+}
+
+article > h1{
+    margin: 0
+}
+
+#comment-section{
+    display: flex;
+    justify-content: center;
+}
+
+#new-comment{
+    display: flex;
+    height: fit-content;
+    width: clamp(400px, 70%, 700px);
+    margin-bottom: 0;
+}
+
+#new-comment > form{
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+#new-comment > form > textarea{
+    width: 100%;
+}
+
+#new-comment > form > button{
+    height: 100%;
+}
+
+#reply-form{
+    margin:2px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: clamp(300px, 50%, 500px)
+}
+
+#reply-form > textarea{
+    flex:1;
+}
+
+.comment{
+    padding: 5px;
+    top: 0;
+    bottom: 20px;
+    border-top: 1px solid rgb(203, 203, 203);
+}
+
+.comment-replies{
+    margin: 0 30px;
+}
+
+
+.comment > p{
+    margin: 0;
+}
+
+.date{
+    color: gray;
+}
+
+
+
