@@ -8,38 +8,38 @@ from .forms import ArticleForm
 from django.urls import reverse
 
 
-def user_signup(request):
-    if request.method == "POST":
-        username=request.POST['username']
-        password=request.POST['password']
-        user = User.objects.create_user(username=username, password=password)
-        login(request, user)
-        return redirect(request.POST.get('next', 'home'))
-    return render(request, 'blog/signup.html')
+# def user_signup(request):
+#     if request.method == "POST":
+#         username=request.POST['username']
+#         password=request.POST['password']
+#         user = User.objects.create_user(username=username, password=password)
+#         login(request, user)
+#         return redirect(request.POST.get('next', 'home'))
+#     return render(request, 'blog/signup.html')
 
-def user_login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        # todo: let user know the reason of failed login/authentication
-        user = authenticate(request, username=username, password=password)
-        if user:
-            login(request, user)
-            # ? why request.GET.get when request.method=='POST'
-            next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
-            return redirect(next_url)
-    return render(request, 'blog/login.html')
+# def user_login(request):
+#     if request.method == 'POST':
+#         username = request.POST['username']
+#         password = request.POST['password']
+#         # todo: let user know the reason of failed login/authentication
+#         user = authenticate(request, username=username, password=password)
+#         if user:
+#             login(request, user)
+#             # ? why request.GET.get when request.method=='POST'
+#             next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
+#             return redirect(next_url)
+#     return render(request, 'blog/login.html')
 
-def user_logout(request):
-    logout(request)
-    next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
-    return redirect(next_url)
+# def user_logout(request):
+#     logout(request)
+#     next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
+#     return redirect(next_url)
 
-def guest_login(request):
-    guest_user, created = User.objects.get_or_create(username='guest_user')
-    login(request, guest_user)
-    next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
-    return redirect(next_url)
+# def guest_login(request):
+#     guest_user, created = User.objects.get_or_create(username='guest_user')
+#     login(request, guest_user)
+#     next_url = request.GET.get('next','home') if request.GET.get('next','home') else 'home'
+#     return redirect(next_url)
 
 
 def home(request):

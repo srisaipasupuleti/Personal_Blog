@@ -21,7 +21,7 @@
                     <button type="submit"> Comment</button>
                 </form>
                 {% else %}
-                <p><a href="{% url 'user:login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
+                <p><a href="{% url 'user:login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'user:signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
                 <p>Or <a href="{% url 'blog:guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
                 {% endif %}
             </div>

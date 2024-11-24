@@ -10,5 +10,6 @@
             {{ form.as_p }}
             <button type="submit">Login</button>
         </form>
+        <a href="{% url 'user:guest_login' %}?next={{ request.GET.next }}">Continue as Guest</a>
     </body>
 </html>
