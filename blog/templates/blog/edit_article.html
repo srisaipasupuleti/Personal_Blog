@@ -4,6 +4,7 @@
     <h1>Edit Article</h1>
     <form method="post">
         {% csrf_token %}
+        {{form.media}}
         {{form.as_p}}
         <button type="submit">Submit</button>
     </form>

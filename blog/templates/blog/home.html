@@ -1,6 +1,9 @@
 {% extends "blog/base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
+    {% if request.user.is_superuser %}
+        <a href="{% url 'blog:add_article' %}">Add article</a>
+    {% endif %}
     <div id="article-section">
         {% for article in articles %}
             <a href="{% url 'blog:article_detail' article.id %}"><div class="article-tile"><span class="article-title">{{ article.title }}</span><br><span class="article-date">{{ article.date_published }}</span></div></a>

@@ -58,7 +58,7 @@ def add_comment(request, article_id):
         text = request.POST['text']
         if text:
             Comment.objects.create(article=article, user=request.user, text=text)
-        return redirect('article_detail',article_id=article_id)
+        return redirect('blog:article_detail',article_id=article_id)
     return redirect('home')
 
 @login_required
@@ -114,7 +114,7 @@ def add_article(request):
         form = ArticleForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('home')
+            return redirect('blog:home')
     else:
         form = ArticleForm()
     return render(request, 'blog/add_article.html', {'form': form})
@@ -125,7 +125,7 @@ def edit_article(request, article_id):
         form = ArticleForm(request.POST, instance=article)
         if form.is_valid():
             form.save()
-            url = reverse('article_detail', args=[article.id])
+            url = reverse('blog:article_detail', args=[article.id])
             return redirect(url)
     else:
         form = ArticleForm(instance=article)
@@ -136,7 +136,7 @@ def delete_article(request, article_id):
     article = get_object_or_404(Article, id=article_id)
     if request.method == "POST":
         article.delete()
-        return redirect('dashboard')
+        return redirect('blog:home')
     return render(request, 'blog/delete_article.html', {'article': article})
 
 

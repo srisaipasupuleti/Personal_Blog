@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'blog',
-    'user'
+    'user',
+    'ckeditor'
 ]
 
 LOGIN_URL = '/login'
@@ -140,3 +141,8 @@ SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRY_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SECURE = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db' #(database-backed sessions). DEFAULT.
+
+
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR/'media'

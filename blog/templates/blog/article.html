@@ -8,7 +8,11 @@
     <article>
         <h1>{{article.title}}</h1>
         <p class="article-date">Published on: {{article.date_published}}</p>
-        <p>{{article.content}}</p>
+        {% if request.user.is_superuser %}
+            <a href="{% url 'blog:edit_article' article.id%}">Edit</a>
+            <a href="{% url 'blog:delete_article' article.id%}">Delete</a>
+        {% endif %}
+        <p>{{article.content|safe}}</p>
         <section class="comment-section">
             <h3>Comments</h3>
             <div id="new-comment">
@@ -22,7 +26,7 @@
                 </form>
                 {% else %}
                 <p><a href="{% url 'user:login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'user:signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
-                <p>Or <a href="{% url 'blog:guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
+                <p>Or <a href="{% url 'user:guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
                 {% endif %}
             </div>
             
