@@ -4,6 +4,9 @@
     {% if request.user.is_superuser %}
         <a href="{% url 'blog:add_article' %}">Add article</a>
     {% endif %}
+    {% for tag in tags %}
+        <a href="{% url 'blog:tagged_articles' tag.id%}">{{tag.name}}</a> {% if not forloop.last %},{% endif %}
+    {% endfor %}
     <div id="article-section">
         {% for article in articles %}
             <a href="{% url 'blog:article_detail' article.id %}"><div class="article-tile"><span class="article-title">{{ article.title }}</span><br><span class="article-date">{{ article.date_published }}</span></div></a>

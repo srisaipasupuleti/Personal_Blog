@@ -14,6 +14,7 @@ urlpatterns = [
     path('article/add', views.add_article, name='add_article'),
     path('article/edit/<int:article_id>', views.edit_article, name='edit_article'),
     path('article/delete/<int:article_id>', views.delete_article, name='delete_article'),
+    path("tag/<int:tag_id>",views.tagged_articles,name='tagged_articles'),
     path('add_comment/<int:article_id>', views.add_comment, name='add_comment'),
     path('comment/<int:comment_id>/like', views.handle_like, name='handle_like'),
     path('comment/<int:comment_id>/dislike', views.handle_dislike, name='handle_dislike'),

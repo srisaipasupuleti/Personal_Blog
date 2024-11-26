@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout, authenticate
-from .models import Article, Comment
+from .models import Article, Comment, Tag
 from django.http import HttpResponse
 from .forms import ArticleForm
 from django.urls import reverse
@@ -44,7 +44,8 @@ from django.urls import reverse
 
 def home(request):
     articles = Article.objects.all().order_by('-date_published')
-    return render(request, "blog/home.html", {'articles': articles})
+    tags = Tag.objects.all()
+    return render(request, "blog/home.html", {'articles': articles, 'tags': tags})
 
 def article_detail(request, article_id):
     article = get_object_or_404(Article,id=article_id)
@@ -144,3 +145,10 @@ def delete_article(request, article_id):
 def dashboard(request):
     articles = Article.objects.all()
     return render(request, 'blog/dashboard.html', {'articles': articles})
+
+
+def tagged_articles(request, tag_id):
+    tag, created = Tag.objects.get_or_create(id=tag_id)
+    articles = Article.objects.filter(tags=tag.id)
+    tags=[article.tags for article in articles]
+    return render(request, 'blog/home.html', {"articles": articles})

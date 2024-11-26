@@ -12,6 +12,9 @@
             <a href="{% url 'blog:edit_article' article.id%}">Edit</a>
             <a href="{% url 'blog:delete_article' article.id%}">Delete</a>
         {% endif %}
+        {% for tag in article.tags.all %}
+            <a href="{% url 'blog:tagged_articles' tag.id %}">{{tag.name}}</a> {% if not forloop.last %}, {% endif %}
+        {% endfor %}
         <p>{{article.content|safe}}</p>
         <section class="comment-section">
             <h3>Comments</h3>
