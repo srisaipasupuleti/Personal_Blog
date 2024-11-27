@@ -3,12 +3,13 @@
 <html>
 <head>
     <title>{% block title %}Blog{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}"> -->
+     <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
 </head>
-<body>
-    <nav>
+<body class="flex">
+    <nav class="m-11">
         <a href="{% url 'blog:home' %}">Home</a>
-        <h1 id="app-name">Sye Blog</h1>
+        <h1 class="">Sye Blog</h1>
         <span>
             {% if request.user.is_authenticated %}
                 <span>Hello, {{request.user}}</span><br>
