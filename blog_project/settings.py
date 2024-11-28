@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog',
     'user',
-    'ckeditor'
+    'ckeditor',
+    'widget_tweaks',
 ]
 
 LOGIN_URL = '/login'
