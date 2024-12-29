@@ -1,7 +1,9 @@
 from django import forms
 from .models import Article, Tag
+from ckeditor.widgets import CKEditorWidget
 
 class ArticleForm(forms.ModelForm):
+    content = forms.CharField(widget=CKEditorWidget())
     tags=forms.CharField(required=False, help_text="tags separated by commas")
     class Meta:
         model = Article

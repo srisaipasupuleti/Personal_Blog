@@ -143,3 +143,18 @@ SESSION_ENGINE = 'django.contrib.sessions.backends.db' #(database-backed session
 
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = BASE_DIR/'media'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 500,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            # 'uploadimage',  # For uploading images
+            'autogrow',     # Automatically grow editor height
+        ]),
+        # 'removePlugins': 'resize',  # Disable resizing (optional)
+        'extraAllowedContent': 'h1 h2 h3 p blockquote; a[!href]; img[!src,width,height];',
+        'removePlugins': 'stylesheetparser',
+        'allowedContent': True,
+    },
+}

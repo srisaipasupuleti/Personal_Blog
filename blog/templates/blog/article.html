@@ -5,17 +5,28 @@
 {% endblock %}
 
 {% block content %}
-    <article>
+    <article class="flex flex-col items-center">
         <h1 class="font-semibold">{{article.title}}</h1>
         <p class="font-light border-b">Published on: {{article.date_published}}</p>
-        {% if request.user.is_superuser %}
-            <a href="{% url 'blog:edit_article' article.id%}">Edit</a>
-            <a href="{% url 'blog:delete_article' article.id%}">Delete</a>
-        {% endif %}
-        {% for tag in article.tags.all %}
+        <div>
+            {% for tag in article.tags.all %}
             <a href="{% url 'blog:tagged_articles' tag.id %}"><span class="border px-1.5 py-0 bg-blue-800 text-white rounded text-xs">{{tag.name}}</span></a> <!--{% if not forloop.last %}, {% endif %}-->
-        {% endfor %}
-        <!-- <p class="">{{article.content|safe}}</p> -->
+            {% endfor %}
+        </div>
+        <div>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'blog:edit_article' article.id%}">Edit</a>
+                <a href="{% url 'blog:delete_article' article.id%}">Delete</a>
+            {% endif %}
+        </div>
+        <div class="prose sm:prose-md w-full justify-center">
+            {{article.content|safe}}
+        </div=>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log("Article content:", "{{ article.content|escapejs }}");
+            });
+        </script>
         <section class="comment-section p-2">
             <h3 class="font-bold border-b">Comments</h3>
             <div id="new-comment">
@@ -73,7 +84,7 @@
             </div>
         </section>
     </article>
-
+        
     
     <script>
         document.addEventListener('DOMContentLoaded', function(){
