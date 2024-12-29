@@ -1,0 +1,22 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <link href="{% static 'css/tailwind.css' %}" rel="stylesheet">
+    </head>
+    <body class="h-dvh flex items-center justify-center">
+        <div class="bg-orange-100 p-4 rounded-md flex flex-col items-center justify-center shadow-lg">
+            <h2 class="text-3xl font-bold">Login</h2>
+            <form method="post" class="flex flex-col items-center space-y-4">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit" class="bg-amber-700 px-5 py-1 rounded-full m-1 text-white">Login</button>
+            </form>
+            
+            <a href="{% url 'user:guest_login' %}?next={{ request.GET.next }}" class="underline ">Continue as Guest</a>
+        </div>
+    </body>
+</html>

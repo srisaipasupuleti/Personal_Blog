@@ -37,7 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'blog'
+    'blog',
+    'user',
+    'ckeditor',
+    'widget_tweaks',
 ]
 
 LOGIN_URL = '/login'
@@ -115,14 +118,10 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
-
-# URL prefix for static files
-STATIC_URL = '/static/'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static')]
 
 # For serving static files in production (use with collectstatic)
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles") # Collected static files location
@@ -139,3 +138,23 @@ SESSION_COOKIE_AGE = 3600
 SESSION_EXPIRY_AT_BROWSER_CLOSE = True
 SESSION_COOKIE_SECURE = True
 SESSION_ENGINE = 'django.contrib.sessions.backends.db' #(database-backed sessions). DEFAULT.
+
+
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR/'media'
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'height': 500,
+        'width': '100%',
+        'extraPlugins': ','.join([
+            # 'uploadimage',  # For uploading images
+            'autogrow',     # Automatically grow editor height
+        ]),
+        # 'removePlugins': 'resize',  # Disable resizing (optional)
+        'extraAllowedContent': 'h1 h2 h3 p blockquote; a[!href]; img[!src,width,height];',
+        'removePlugins': 'stylesheetparser',
+        'allowedContent': True,
+    },
+}

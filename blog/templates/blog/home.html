@@ -1,9 +1,15 @@
 {% extends "blog/base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-<div id="article-section">
-    {% for article in articles %}
-        <a href="{% url 'article_detail' article.id %}"><div class="article-tile"><span class="article-title">{{ article.title }}</span><br><span class="article-date">{{ article.date_published }}</span></div></a>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'blog:add_article' %}">Add article</a>
+    {% endif %}
+    {% for tag in tags %}
+        <a href="{% url 'blog:tagged_articles' tag.id%}"><span class="border px-1.5 py-0 bg-blue-800 text-white rounded text-xs">{{tag.name}}</span></a> <!--{% if not forloop.last %},{% endif %}--> 
     {% endfor %}
-</div>
+    <div id="">
+        {% for article in articles %}
+            <a href="{% url 'blog:article_detail' article.id %}"><div class="border-b py-1"></div><span class="font-semibold">{{ article.title }}</span><br><span class="font-normal text-xs">{{ article.date_published }}</span></div></a>
+        {% endfor %}
+    </div>
 {% endblock %}

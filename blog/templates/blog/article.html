@@ -5,45 +5,62 @@
 {% endblock %}
 
 {% block content %}
-    <article>
-        <h1>{{article.title}}</h1>
-        <p class="article-date">Published on: {{article.date_published}}</p>
-        <p>{{article.content}}</p>
-        <section class="comment-section">
-            <h3>Comments</h3>
+    <article class="flex flex-col items-center">
+        <h1 class="font-semibold">{{article.title}}</h1>
+        <p class="font-light border-b">Published on: {{article.date_published}}</p>
+        <div>
+            {% for tag in article.tags.all %}
+            <a href="{% url 'blog:tagged_articles' tag.id %}"><span class="border px-1.5 py-0 bg-blue-800 text-white rounded text-xs">{{tag.name}}</span></a> <!--{% if not forloop.last %}, {% endif %}-->
+            {% endfor %}
+        </div>
+        <div>
+            {% if request.user.is_superuser %}
+                <a href="{% url 'blog:edit_article' article.id%}">Edit</a>
+                <a href="{% url 'blog:delete_article' article.id%}">Delete</a>
+            {% endif %}
+        </div>
+        <div class="prose sm:prose-md w-full justify-center">
+            {{article.content|safe}}
+        </div=>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                console.log("Article content:", "{{ article.content|escapejs }}");
+            });
+        </script>
+        <section class="comment-section p-2">
+            <h3 class="font-bold border-b">Comments</h3>
             <div id="new-comment">
                 <!-- ? how this user object will be maintained in Django-->
                 {% if request.user.is_authenticated %}
                 <!-- ? do we need to  execute article.id or inside url template tag-->
-                <form action="{% url 'add_comment' article.id %}" method="post">
+                <form action="{% url 'blog:add_comment' article.id %}" method="post">
                     {% csrf_token %}
                     <textarea name="text" placeholder="Add your comment here..."></textarea>
                     <button type="submit"> Comment</button>
                 </form>
                 {% else %}
-                <p><a href="{% url 'login' %}?next={{ request.path }}">Log in</a> or <a href="{% url 'signup' %}?next={{ request.path }}">Sign up</a> to leave a comment</p>
-                <p>Or <a href="{% url 'guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
+                <p class="font-light border p-2"><a href="{% url 'user:login' %}?next={{ request.path }}" class="underline">Log in</a> / <a class="underline" href="{% url 'user:signup' %}?next={{ request.path }}">Sign up</a> to leave a comment, or <a href="{% url 'user:guest_login' %}?next={{ request.path }}">Continue as a guest</a></p>
                 {% endif %}
             </div>
             
             <div class="old-comments">
                     {% for comment in comments %}
-                    <div class="comment">
+                    <div class="comment border-b">
                         <p><strong>{{comment.user}}</strong> <span class="date"><i>{{comment.date}}</i></span></p>
                         <p>{{comment.text}}</p>
                         <!-- <p>{{comment.likes_count}} Likes | {{comment.dislikes_count}} Dislikes</p> -->
                         <div class="comment-options">
-                            <form action="{% url 'handle_like' comment.id %}?next={{request.path}}" method="post" style="display: inline;">
+                            <form action="{% url 'blog:handle_like' comment.id %}?next={{request.path}}" method="post" style="display: inline;">
                                 {% csrf_token %}
-                                <button class="comment-like-button" type="submit">{{comment.likes_count}} Likes</button>
+                                <button class="border px-1" type="submit">{{comment.likes_count}} Likes</button>
                             </form>
-                            <form action="{% url 'handle_dislike' comment.id %}?next={{request.path}}" method="post" style="display: inline">
+                            <form action="{% url 'blog:handle_dislike' comment.id %}?next={{request.path}}" method="post" style="display: inline">
                                 {% csrf_token %}
                                 <button class="comment-dislike-button" type="submit">{{comment.dislikes_count}} Dislikes</button>
                             </form>
                             <button class="reply-btn" data-comment-id="{{ comment.id }}">Reply</button>
                             <div class="reply-form-container" id="reply-form-{{ comment.id }}" style="display: none;">
-                                <form id="reply-form" action="{% url 'handle_reply' comment.id %}?next={{request.path}}" method="post">
+                                <form id="reply-form" action="{% url 'blog:handle_reply' comment.id %}?next={{request.path}}" method="post">
                                     {% csrf_token %}
                                     <textarea name="text" placeholder="Reply to this comment"></textarea>
                                     <button type="submit">Submit</button>
@@ -67,7 +84,7 @@
             </div>
         </section>
     </article>
-
+        
     
     <script>
         document.addEventListener('DOMContentLoaded', function(){
